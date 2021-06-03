@@ -1,0 +1,22 @@
+version: "3.7"
+services:
+  omdb-heatmap-db:
+    image: postgres
+    container_name: omdb-heatmap-db
+    env_file:
+      - .env
+    restart: unless-stopped
+    environment:
+      DB_DATABASE: $POSTGRES_DATABASE}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      DB_USER: ${POSTGRES_USER}
+    volumes:
+      - ./docker-compose/mysql:/docker-entrypoint-initdb.d
+    ports:
+      - ${POSTGRES_PORT}:5432
+    networks:
+      - omdb-heatmap
+
+networks:
+  omdb-heatmap:
+    driver: bridge
